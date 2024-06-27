@@ -1,11 +1,12 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 let myBalance = 10000;
 let pinCode = 23456;
 let pinAnswer = await inquirer.prompt([
     {
         name: "pin",
         type: "number",
-        message: "Enter your pin code",
+        message: chalk.magenta("Enter your pin code"),
     },
 ]);
 //check the pincode
@@ -18,7 +19,7 @@ else {
 let operationAnswer = await inquirer.prompt({
     name: "operation",
     type: "list",
-    message: "please select option",
+    message: chalk.magenta("please select option"),
     choices: ["withdraw", "fast-cash", "check balance"],
 });
 //for cash withdraw option
@@ -27,7 +28,7 @@ if (operationAnswer.operation === "withdraw") {
         {
             name: "withdraw",
             type: "number",
-            message: "enter withdraw amount",
+            message: chalk.magenta("enter withdraw amount"),
         },
     ]);
     if (myBalance >= answerWithdraw.withdraw) {
@@ -35,7 +36,7 @@ if (operationAnswer.operation === "withdraw") {
         console.log(`your remaining balance is=${myBalance}`);
     }
     else {
-        console.log("you have insufficent balance");
+        console.log(chalk.red("you have insufficent balance"));
     }
 }
 //if the operation answer is fastcash
@@ -44,19 +45,19 @@ else if (operationAnswer.operation === "fast-cash") {
         {
             name: "fastCash",
             type: "list",
-            message: "select the amount you want to withdraw",
+            message: chalk.magenta("select the amount you want to withdraw"),
             choices: ["1000", "5000", "10000", "15000"],
         },
     ]);
     if (myBalance >= answerFastcash.fastCash) {
         myBalance -= answerFastcash.fastCash;
-        console.log(`your remaining balance is ${myBalance}`);
+        console.log(chalk.yellow(`your remaining balance is ${myBalance}`));
     }
     else {
-        console.log("you have insufficient balance");
+        console.log(chalk.red("you have insufficient balance"));
     }
 }
 //if operation answer is check balance
 if (operationAnswer.operation === "check balance") {
-    console.log(`your balance is=${myBalance}`);
+    console.log(chalk.yellow(`your balance is=${myBalance}`));
 }
